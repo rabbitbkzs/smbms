@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 导入约束头 -->
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 根节点 -->
+<configuration>
+	<properties resource="database.properties"></properties>
+	<!--起pojo其别名 简化返回值类型,不区分大小写-->
+	<!--<typeAliases>-->
+		<!--<typeAlias type="com.githup.mybatis.pojo.User" alias="user"/>-->
+	<!--</typeAliases>-->
+	<!--直接配置包名,mybatis框架会自动的找这个包下的所有实体类 为这些实体类起别名 别名就是类名 (不区分大小写)-->
+	<typeAliases>
+		<package name="com.githup.mybatis.pojo"/>
+	</typeAliases>
+	<!-- 配置运行环境 可以配置多个
+		default:默认  必须指定一个默认的运行环境
+	-->
+	<environments default="deverlment">
+		<!-- 某一套运行环境 id:为这套运行环境起个名字 -->
+		<environment id="deverlment">
+			<!-- 将事物交给JDBC来管理 mybatis默认管理
+				还可以配置 manger托管
+			 -->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- 配置连接池pooled   JNDI连接池  tomcat-->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 配置mapper映射文件 -->
+	<mappers>
+		<!--系统会自动扫描dao下的所有配置文件-->
+		<package name="com.githup.mybatis.dao"/>
+	</mappers>
+</configuration>
